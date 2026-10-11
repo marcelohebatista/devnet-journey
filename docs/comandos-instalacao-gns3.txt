@@ -1,0 +1,32 @@
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y \
+  dynamips \
+  vpcs \
+  ubridge \
+  qemu-kvm \
+  qemu-utils \
+  libvirt-daemon-system \
+  libvirt-clients \
+  bridge-utils \
+  wireshark \
+  xterm \
+  telnet \
+  vinagre \
+  tigervnc-viewer \
+  cpu-checker \
+  curl \
+  ca-certificates
+  
+sudo add-apt-repository ppa:gns3/ppa -y
+sudo apt update
+sudo apt install -y gns3-gui gns3-server
+
+sudo usermod -aG ubridge,libvirt,kvm,wireshark,docker $USER
+
+sudo systemctl enable --now libvirtd
+
+kvm-ok
+
+
+  

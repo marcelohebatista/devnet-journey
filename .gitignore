@@ -1,0 +1,18 @@
+# --- SEGREDOS (nunca sobem!) ---
+.env
+*.env
+meraki_key.txt
+*secret*
+config.local
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+
+# --- Editor / SO ---
+.vscode/
+.idea/
+*.swp
+.DS_Store
+*~

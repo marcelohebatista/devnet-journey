@@ -1,0 +1,24 @@
+# Containers parados (Exited) — os fantasmas do GNS3
+docker container prune -f
+
+# Containers em execução também (PARA e APAGA todos)
+docker stop $(docker ps -q)
+docker rm -f $(docker ps -aq)
+
+# Imagens não usadas por nenhum container
+docker image prune -a -f
+
+# TODAS as imagens (sem dó)
+docker rmi -f $(docker images -q)
+
+# Volumes órfãos (de containers já apagados)
+docker volume prune -f
+
+# TODOS os volumes (⚠️ apaga dados de bancos, etc.)
+docker volume rm -f $(docker volume ls -q)
+
+# Redes customizadas (gns3_net, etc. — preserva bridge/host/none)
+docker network ls --format '{{.Name}}' | grep -vE '^(bridge|host|none)$' | xargs -r docker network rm
+
+# Cache de build (as camadas dos seus Dockerfiles — GBs!)
+docker builder prune -af

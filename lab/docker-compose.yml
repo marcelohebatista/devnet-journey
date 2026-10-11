@@ -1,0 +1,24 @@
+# ================================================================
+# devnet — docker-compose
+# Fora do GNS3:  docker compose up -d   → docker exec -it devnet bash
+# Dentro do GNS3: build manual → template console TELNET → drag → Start
+# ================================================================
+services:
+  devnet:
+    build: .
+    image: devnet:1.0
+    container_name: devnet
+    stdin_open: true        # -i: bash vivo
+    tty: true               # -t: shell bonito no console
+    restart: unless-stopped
+    networks:
+      - gns3_net
+    volumes:
+      - ./codigos:/lab
+
+networks:
+  gns3_net:
+    name: gns3_net
+    driver: bridge
+
+VOLUME ["/lab"]
