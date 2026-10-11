@@ -37,7 +37,7 @@ Python 3, requests, netmiko, ncclient, napalm, ansible, nmap, tcpdump, git.
 ## 📚 Sobre mim
 
 20+ anos docência em redes (CCAI/CCNA), mestrado em computação, pós em
-Data Science e IA Aplicada à Saúde. Em transição para IA em produção (MLOps).
+Data Science e IA Aplicada à Saúde.
 
 ## 🗂️ Estrutura
 
