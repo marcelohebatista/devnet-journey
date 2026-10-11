@@ -20,6 +20,8 @@ Topologia 100% própria, custo zero:
 
 `devnet-1 (Docker/Ubuntu + arsenal Python) ↔ vIOS-L2 (switch) ↔ CSR8000v (IOS XE 17.6, RESTCONF+NETCONF) ↔ Cloud`
 
+![Topologia do lab GNS3](imagens/gns3.png)
+
 Container tudo-em-um construído com Dockerfile próprio (ver `lab/`):
 Python 3, requests, netmiko, ncclient, napalm, ansible, nmap, tcpdump, git.
 
