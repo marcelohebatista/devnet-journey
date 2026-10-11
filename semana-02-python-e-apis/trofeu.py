@@ -11,7 +11,14 @@ import urllib3           # só para silenciar o aviso do certificado self-signed
 urllib3.disable_warnings()   # lab: certificado self-signed → verify=False
 
 # --- variáveis: nunca hardcode de credenciais em produção (cap. 2.5) ---
-HOST = "192.168.0.142"        # IP atual da Gi1 do CSR8000v (confira amanhã!)
+#HOST = "192.168.0.142"        # IP atual da Gi1 do CSR8000v (confira amanhã!)
+HOST = input("IP do roteador: ").strip()
+
+if not HOST:
+    print("IP vazio — nada a fazer")
+    sys.exit(1)
+
+
 USER = "admin"
 PASS = "cisco123"
 
