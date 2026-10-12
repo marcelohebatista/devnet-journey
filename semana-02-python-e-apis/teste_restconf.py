@@ -46,6 +46,18 @@ def mostra_hostname(host):
         dado = r.json()
         print("Hostname:", dado["Cisco-IOS-XE-native:hostname"])
 
+def mostra_interfaces_state(host):
+    r = get_restconf(host, "ietf-interfaces:interfaces-state")
+    if not r:
+        return
+    dado = r.json()
+    for i in dado["ietf-interfaces:interfaces"]["interface"]:
+        nome = i.get("name")
+        status = i.get("oper-status", "?")
+        # o IP vive em ipv4/ietf-ip:ipv4/address
+        enderecos = i.get("ietf-ip:ipv4", {}).get("address", [])
+        ips = ", ".join(e.get("ip") for e in enderecos) or "sem IP"
+        print(f"{nome:<20}{status:<10}{ips}")
 
 def mostra_interfaces(host):
     r = get_restconf(host, "Cisco-IOS-XE-native:native/interface")
@@ -58,7 +70,8 @@ def mostra_interfaces(host):
     print(f"\n{'INTERFACE':<20}{'IP':<16}{'DESCRIÇÃO'}")
     print("-" * 50)
     for i in ifaces:
-        nome  = i.get("name", "?")
+        # nome  = i.get("name", "?")
+        nome = "GigabitEthernet" + str(i.get("name", "?"))
         descr = i.get("description", "-")
         ip    = i.get("ip", {}) \
                     .get("address", {}) \
@@ -75,3 +88,4 @@ if not HOST:
 
 mostra_hostname(HOST)
 mostra_interfaces(HOST)
+mostra_interfaces_state(HOST)
