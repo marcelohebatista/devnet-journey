@@ -69,6 +69,6 @@ Data Science e IA Aplicada à Saúde.
 
 ## 🗂️ Estrutura
 
-- `scripts` — códigos e labs de cada semana
+- `scripts/` — códigos e labs de cada semana
 - `lab/` — Dockerfile, entrypoint e scripts do laboratório
 - `docs/` — blueprint, rota de estudos, instalação do lab
