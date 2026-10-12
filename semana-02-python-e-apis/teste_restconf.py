@@ -55,24 +55,6 @@ def mostra_hostname(host):
         print("Hostname:", dado["Cisco-IOS-XE-native:hostname"])
 
 
-def mostra_interfaces(host):
-    """A CONFIG (running-config em JSON — o 'show run' da API)."""
-    r = get_restconf(host, "Cisco-IOS-XE-native:native/interface")
-    if not r:
-        return
-    dado = r.json()
-    ifaces = dado["Cisco-IOS-XE-native:interface"]["GigabitEthernet"]
-
-    print(f"\n{'INTERFACE':<20}{'IP (config)':<16}{'DESCRIÇÃO'}")
-    print("-" * 50)
-    for i in ifaces:
-        nome  = "GigabitEthernet" + str(i.get("name", "?"))
-        descr = i.get("description", "-")
-        ip    = i.get("ip", {}).get("address", {}) \
-                    .get("primary", {}).get("address", "sem IP")
-        print(f"{nome:<20}{ip:<16}{descr}")
-
-
 def pega_state(host):
     """Estado de TODAS as interfaces: nome, status, speed, contadores."""
     r = get_restconf(host, "ietf-interfaces:interfaces-state")
@@ -115,5 +97,4 @@ if not HOST:
     sys.exit(1)
 
 mostra_hostname(HOST)
-mostra_interfaces(HOST)
 mostra_state_e_trafego(HOST)
