@@ -1,4 +1,4 @@
-# 🚀 DevNet Journey — Marcelo Batista
+# 🚀 DevNet Journey 
 
 > Jornada rumo à certificação Cisco DevNet Associate (200-901)
 > com laboratório próprio (GNS3 + Docker) e registro por ETAPAS e FASES.
@@ -14,15 +14,14 @@ Topologia 100% própria, custo zero:
 Container tudo-em-um construído com Dockerfile próprio (ver `lab/`):
 Python 3, requests, netmiko, ncclient, napalm, ansible, nmap, tcpdump, git.
 
-🟡 ETAPA 0 — Fundações do Lab (concluída)
+🟡 ETAPA 0 — Fundações do Lab
  - Fase 0.1 — Lab GNS3 + Docker montado do zero (topologia viva) ✅ 
  - Fase 0.2 — Git + GitHub + fluxo repo→push→pull→lab ✅ 
  
-🟡 ETAPA 1 — Python + APIs de Rede (em andamento) 
- - Fase 1.1 — curl → requests (trofeu.py: hostname via API) ✅ 
- - Fase 1.2 — Ferramenta RESTCONF completa (config × state × oper, throughput) ✅ 
- - Fase 1.3 — Ponte Rede → IA (ponte_ia.py: POST, Bearer, LLM) ← ATUAL
- - Fase 1.4 — NETCONF 1º contato (lab_netconf.py: hostname em XML)
+🟡 ETAPA 1 — Python + APIs de Rede 
+ - Fase 1.1 — Ferramenta RESTCONF completa (config × state × oper, throughput) ✅ 
+ - Fase 1.2 — Ponte Rede → IA (ponte_ia.py: POST, Bearer, LLM) ← ATUAL
+ - Fase 1.3 — NETCONF 1º contato (lab_netconf.py: hostname em XML)
 
 🟡 ETAPA 2 — Git Profissional
  - Fase 2.1 — Branches e merge
@@ -69,6 +68,6 @@ Data Science e IA Aplicada à Saúde.
 
 ## 🗂️ Estrutura
 
-- `scripts/` — códigos e labs de cada semana
-- `lab/` — Dockerfile, entrypoint e scripts do laboratório
+- `etapas_fases/` — códigos e labs de cada etapa e ou fase
+- `lab/` — Dockerfile, entrypoint e docker-compose.yml
 - `docs/` — blueprint, rota de estudos, instalação do lab
