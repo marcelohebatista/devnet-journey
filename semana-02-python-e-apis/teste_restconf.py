@@ -38,23 +38,15 @@ def get_restconf(host, path):
         print("Resposta inesperada:", r.status_code, r.text[:200])
     return None
 
-
 # --- helpers ----------------------------------------------------------
 def pega_ip_da_interface(host, nome):
-    """IP via path DIRETO (o GET largo vem sem ietf-ip:ipv4 — augmentation)."""
-    r = get_restconf(host, f"ietf-interfaces:interfaces-state/interface={nome}")
+    """IP via modelo oper da Cisco (ietf-interfaces não exporta ipv4 no state)."""
+    r = get_restconf(host,
+        f"Cisco-IOS-XE-interfaces-oper:interfaces/interface={nome}")
     if not r:
         return "sem IP"
-
-    # --- ESPIADA TEMPORÁRIA (remover depois de achar a chave) ---
-    if nome == "GigabitEthernet1":
-        print(json.dumps(r.json(), indent=2)[:800])
-    # ------------------------------------------------------------
-    
-    ficha = r.json().get("ietf-interfaces:interface", {})
-    enderecos = ficha.get("ietf-ip:ipv4", {}).get("address", [])
-    return ", ".join(e.get("ip") for e in enderecos) or "sem IP"
-
+    ficha = r.json().get("Cisco-IOS-XE-interfaces-oper:interface", {})
+    return ficha.get("ipv4") or "sem IP"      # simples assim: a chave ipv4 direto
 
 def mostra_hostname(host):
     r = get_restconf(host, "Cisco-IOS-XE-native:native/hostname")
