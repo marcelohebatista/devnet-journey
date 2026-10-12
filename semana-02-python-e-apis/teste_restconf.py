@@ -51,7 +51,7 @@ def mostra_interfaces_state(host):
     if not r:
         return
     dado = r.json()
-    for i in dado["ietf-interfaces:interfaces"]["interface"]:
+    for i in dado["ietf-interfaces:interfaces-state"]["interface"]:
         nome = i.get("name")
         status = i.get("oper-status", "?")
         # o IP vive em ipv4/ietf-ip:ipv4/address
