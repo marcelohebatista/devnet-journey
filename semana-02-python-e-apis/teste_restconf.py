@@ -23,7 +23,7 @@ USER = "admin"
 PASS = "cisco123"
 
 #URL = f"https://{HOST}/restconf/data/Cisco-IOS-XE-native:native/hostname"
-URL = f"https://{HOST}/restconf/data/Cisco-IOS-XE-native:native/interfaces"
+URL = f"https://{HOST}/restconf/data/Cisco-IOS-XE-native:native/interface"
 
 HEADERS = {"Accept": "application/yang-data+json"}   # MIME do RESTCONF (cai na prova!)
 
@@ -51,12 +51,4 @@ elif r.status_code == 404:
 else:
     print("Resposta inesperada:", r.text[:200])
 
-# ================================================================
-# DESAFIOS p/ evoluir o script (faça 1 por dia esta semana):
-# 1. Trocar o IP hardcode por input("IP da borda: ") ou sys.argv
-# 2. Pedir OUTRO campo (ex.: /native/interface → liste as interfaces!)
-# 3. Envolver em try/except requests.exceptions.ConnectionError
-# 4. Transformar em função: get_restconf(path) → retorna dict
-# 5. BÔNUS PONTE-IA: a MESMA estrutura chama uma API de LLM
-#    (só mudam URL + Bearer token — prove que a ponte existe)
-# ================================================================
+
