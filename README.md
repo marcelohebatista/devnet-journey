@@ -20,7 +20,7 @@ Python 3, requests, netmiko, ncclient, napalm, ansible, nmap, tcpdump, git.
  
 🟡 ETAPA 1 — Python + APIs de Rede 
  - Fase 1.1 — Ferramenta RESTCONF completa (config × state × oper, throughput) ✅ 
- - Fase 1.2 — Ponte Rede → IA (ponte_ia.py: POST, Bearer, LLM) ← ATUAL
+ - Fase 1.2 — Ponte entre Redes → IA (ponte_ia.py: POST, Bearer, LLM) ← ATUAL
  - Fase 1.3 — NETCONF 1º contato (lab_netconf.py: hostname em XML)
 
 🟡 ETAPA 2 — Git Profissional
