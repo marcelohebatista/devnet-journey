@@ -25,8 +25,8 @@ ROUTER_PASS = "cisco123"
 # --- a key da LLM mora NO AMBIENTE, nunca no código ------------------
 GROQ_KEY = os.environ.get("GROQ_API_KEY", "")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL    = "llama-3.3-70b-versatile"
-
+#MODEL    = "llama-3.3-70b-versatile"
+MODEL = "openai/gpt-oss-120b"
 
 # --- [1] COLETA: dados REAIS da rede via RESTCONF ---------------------
 def get_restconf(host, path):

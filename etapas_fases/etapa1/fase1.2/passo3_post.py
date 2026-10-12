@@ -20,7 +20,7 @@ import requests
 
 KEY = os.environ.get("GROQ_API_KEY", "")
 URL = "https://api.groq.com/openai/v1/chat/completions"
-MODEL = "llama-3.3-70b-versatile"     # confira console.groq.com/docs/models
+MODEL = "openai/gpt-oss-120b"     # confira console.groq.com/docs/models
 
 if not KEY:
     print("❌ Exporte a key primeiro: export GROQ_API_KEY='gsk_...'")
