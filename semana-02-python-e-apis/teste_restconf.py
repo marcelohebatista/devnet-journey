@@ -1,54 +1,77 @@
 # ================================================================
-# trofeu.py — SEMANA 2, DIA 1: o troféu RESTCONF (curl) → Python
+# trofeu.py — SEMANA 2: ferramenta RESTCONF completa
 # Rode no devnet-1:  python3 trofeu.py
-# Antes: confirme o IP da borda (show ip int brief) — DHCP pode mudar!
-# Domínios: 1 (Python básico) + 2 (requests, status codes, auth)
+# Evolução: dia 1 (hostname) + dia 2 (input) + dia 3 (interfaces)
+#           + dia 4 (função genérica — um GET pra qualquer path)
+# Domínios: 1 (funções, dict, loop) + 2 (requests, status, auth)
 # ================================================================
-import requests          # a biblioteca oficial do exame (cap. 2.3 do livro)
-import json              # parser/serializador de JSON (cap. 2.4)
-import urllib3           # só para silenciar o aviso do certificado self-signed
+import sys                 # faltava no dia 2! (sys.exit precisa dele)
+import requests
+import json
+import urllib3
 
-urllib3.disable_warnings()   # lab: certificado self-signed → verify=False
+urllib3.disable_warnings()
 
-# --- variáveis: nunca hardcode de credenciais em produção (cap. 2.5) ---
-#HOST = "192.168.0.142"        # IP atual da Gi1 do CSR8000v (confira amanhã!)
+USER = "admin"
+PASS = "cisco123"
+HEADERS = {"Accept": "application/yang-data+json"}   # MIME do RESTCONF (cai na prova!)
+
+
+# --- a função genérica: UM GET que serve pra QUALQUER path ------------
+def get_restconf(host, path):
+    """Faz GET no RESTCONF e devolve o objeto response (ou None se falhou)."""
+    url = f"https://{host}/restconf/data/{path}"
+    try:
+        r = requests.get(url, auth=(USER, PASS), headers=HEADERS,
+                         verify=False, timeout=10)
+    except requests.exceptions.ConnectionError:
+        print("Sem rota até o roteador — confira o IP (show ip int brief)")
+        return None
+
+    if r.status_code == 200:
+        return r
+    if r.status_code == 401:
+        print("Credencial errada — check username/password na borda")
+    elif r.status_code == 404:
+        print(f"Path não existe ({path}) — restconf está ligado?")
+    else:
+        print("Resposta inesperada:", r.status_code, r.text[:200])
+    return None
+
+
+# --- as "vistas": cada uma lê o SEU documento ------------------------
+def mostra_hostname(host):
+    r = get_restconf(host, "Cisco-IOS-XE-native:native/hostname")
+    if r:
+        dado = r.json()
+        print("Hostname:", dado["Cisco-IOS-XE-native:hostname"])
+
+
+def mostra_interfaces(host):
+    r = get_restconf(host, "Cisco-IOS-XE-native:native/interface")
+    if not r:
+        return
+    dado = r.json()
+    # desce a árvore YANG: interface → GigabitEthernet → lista
+    ifaces = dado["Cisco-IOS-XE-native:interface"]["GigabitEthernet"]
+
+    print(f"\n{'INTERFACE':<20}{'IP':<16}{'DESCRIÇÃO'}")
+    print("-" * 50)
+    for i in ifaces:
+        nome  = i.get("name", "?")
+        descr = i.get("description", "-")
+        ip    = i.get("ip", {}) \
+                    .get("address", {}) \
+                    .get("primary", {}) \
+                    .get("address", "sem IP")
+        print(f"{nome:<20}{ip:<16}{descr}")
+
+
+# --- main: o programa em si ------------------------------------------
 HOST = input("IP do roteador: ").strip()
-
 if not HOST:
     print("IP vazio — nada a fazer")
     sys.exit(1)
 
-
-USER = "admin"
-PASS = "cisco123"
-
-#URL = f"https://{HOST}/restconf/data/Cisco-IOS-XE-native:native/hostname"
-URL = f"https://{HOST}/restconf/data/Cisco-IOS-XE-native:native/interface"
-
-HEADERS = {"Accept": "application/yang-data+json"}   # MIME do RESTCONF (cai na prova!)
-
-# --- a chamada (o curl virou 1 linha de Python) ---
-r = requests.get(
-    URL,
-    auth=(USER, PASS),        # Basic Auth — base64 automático (tópico 2.7)
-    headers=HEADERS,
-    verify=False,             # self-signed do lab
-    timeout=10,               # NUNCA sem timeout (cap. 2.3 — cai na prova!)
-)
-
-# --- tratamento de resposta: o coração do domínio 2 ---
-print("Status:", r.status_code)          # 200 = OK (decorar a tabela de codes!)
-
-if r.status_code == 200:
-    dado = r.json()                      # JSON string → dict Python (json.loads por dentro)
-    hostname = dado["Cisco-IOS-XE-native:hostname"]
-    print("Hostname:", hostname)
-    print("JSON completo:", json.dumps(dado, indent=2))   # dict → JSON bonito (dumps)
-elif r.status_code == 401:
-    print("Credencial errada — check username/password na borda")
-elif r.status_code == 404:
-    print("Caminho não existe — restconf está ligado? (show run | include restconf)")
-else:
-    print("Resposta inesperada:", r.text[:200])
-
-
+mostra_hostname(HOST)
+mostra_interfaces(HOST)
