@@ -14,20 +14,19 @@ Topologia 100% própria, custo zero:
 Container tudo-em-um construído com Dockerfile próprio (ver `lab/`):
 Python 3, requests, netmiko, ncclient, napalm, ansible, nmap, tcpdump, git.
 
-🗺️ O Mapa — 10 Etapas até a prova
-✅ ETAPA 0 — Fundações do Lab (concluída)
- Fase 0.1 — Lab GNS3 + Docker montado do zero (topologia viva)
- Fase 0.2 — Git + GitHub + fluxo repo→push→pull→lab
+🟡 ETAPA 0 — Fundações do Lab (concluída)
+ - Fase 0.1 — Lab GNS3 + Docker montado do zero (topologia viva)
+ - Fase 0.2 — Git + GitHub + fluxo repo→push→pull→lab
  
 🟡 ETAPA 1 — Python + APIs de Rede (em andamento)
- Fase 1.1 — curl → requests (trofeu.py: hostname via API)
- Fase 1.2 — Ferramenta RESTCONF completa (config × state × oper, throughput)
- Fase 1.3 — Ponte Rede → IA (ponte_ia.py: POST, Bearer, LLM) ← ATUAL
- Fase 1.4 — NETCONF 1º contato (lab_netconf.py: hostname em XML)
+ - Fase 1.1 — curl → requests (trofeu.py: hostname via API)
+ - Fase 1.2 — Ferramenta RESTCONF completa (config × state × oper, throughput)
+ - Fase 1.3 — Ponte Rede → IA (ponte_ia.py: POST, Bearer, LLM) ← ATUAL
+ - Fase 1.4 — NETCONF 1º contato (lab_netconf.py: hostname em XML)
 
 🟡 ETAPA 2 — Git Profissional
- Fase 2.1 — Branches e merge
- Fase 2.2 — Pull Requests e resolução de conflitos
+ - Fase 2.1 — Branches e merge
+ - Fase 2.2 — Pull Requests e resolução de conflitos
 
 🟡 ETAPA 3 — APIs REST a Fundo
  Fase 3.1 — API própria em Flask
