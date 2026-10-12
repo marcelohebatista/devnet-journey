@@ -45,6 +45,12 @@ def pega_ip_da_interface(host, nome):
     r = get_restconf(host, f"ietf-interfaces:interfaces-state/interface={nome}")
     if not r:
         return "sem IP"
+
+    # --- ESPIADA TEMPORÁRIA (remover depois de achar a chave) ---
+    if nome == "GigabitEthernet1":
+        print(json.dumps(r.json(), indent=2)[:800])
+    # ------------------------------------------------------------
+    
     ficha = r.json().get("ietf-interfaces:interface", {})
     enderecos = ficha.get("ietf-ip:ipv4", {}).get("address", [])
     return ", ".join(e.get("ip") for e in enderecos) or "sem IP"
